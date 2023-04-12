@@ -4,14 +4,13 @@ from gptube import generate_answer, is_valid_openai_key, is_valid_youtube_url, g
 
 st.set_page_config(page_title="GPTube", page_icon='🎥')
 
-
 # App UI
 def gptube_app():
 
     st.header("🎥 GPTube : Your shortcut to video insights")
 
     # OPENAI API KEY
-    openai_api_key = st.text_input("🔑 Your OPENAI API KEY ([Get yours from the OPENAI website](https://platform.openai.com/account/api-keys)) : ", placeholder="sk-***********************************", type="password")
+    openai_api_key = st.text_input("🔑 Your OpenAI API KEY ([Get yours from the OPENAI website](https://platform.openai.com/account/api-keys)) : ", placeholder="sk-***********************************", type="password")
     
     # Disable YouTube URL field until OpenAI API key is valid
     if openai_api_key:
@@ -28,7 +27,7 @@ def gptube_app():
         api_call_cost = calculate_api_cost(video_duration)
 
         if video_duration >= 4 and video_duration <= 20:
-            st.success(f"The duration of the video is {video_duration} minutes. This will cost you approximately ${api_call_cost}")
+            st.info(f"The duration of the video is {video_duration} minutes. This will cost you approximately ${api_call_cost}")
         else:
             st.warning("Please enter a youtube video that is 4 minutes long at minimum and 20 minutes at maximum.")
     else:

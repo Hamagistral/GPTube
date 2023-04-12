@@ -3,6 +3,8 @@ import re
 import openai
 import requests
 import tempfile
+
+from moviepy.editor import *
 from pytube import YouTube
 from urllib.parse import urlparse, parse_qs
 
@@ -73,35 +75,43 @@ def generate_answer(api_key: str, url: str, question: str) -> str:
     params = parse_qs(query)
     video_id = params["v"][0]
 
-    # Define the directory to store the mp3 files
-    mp3_dir = "mp3_files"
+    with tempfile.TemporaryDirectory() as temp_dir:
 
-    # Create the directory if it doesn't exist
-    os.makedirs(mp3_dir, exist_ok=True)
+        # Download audio
+        yt = YouTube(url)
 
-    # The path of the downloaded mp3
-    audio_filepath = f"{mp3_dir}/{video_id}.mp3"
+        # Get the first available audio stream and download it
+        audio_stream = yt.streams.filter(only_audio=True).first()
+        audio_stream.download(output_path=temp_dir)
 
-    # Downloading the youtube video as mp3 using yt-dlp
-    os.system(f"yt-dlp -x --audio-format mp3 --output {mp3_dir}/{video_id} https://www.youtube.com/watch?v={video_id}")
+        # Convert the downloaded audio file to mp3 format
+        audio_path = os.path.join(temp_dir, audio_stream.default_filename)
+        audio_clip = AudioFileClip(audio_path)
+        audio_clip.write_audiofile(os.path.join(temp_dir, f"{video_id}.mp3"))
 
-    # The path of the transcript
-    transcript_filepath = f"{mp3_dir}/{video_id}.txt"
+        # The path of the audio file
+        audio_path = f"{temp_dir}/{video_id}.mp3"
 
-    # Transcribe the mp3 audio to text
-    transcript = transcribe_audio(audio_filepath)
+        # The path of the transcript
+        transcript_filepath = f"{temp_dir}/{video_id}.txt"
+
+        # Transcribe the mp3 audio to text
+        transcript = transcribe_audio(audio_path)
         
-    # Writing the content of transcript into a txt file
-    with open(transcript_filepath, 'w') as transcript_file:
+        # Writing the content of transcript into a txt file
+        with open(transcript_filepath, 'w') as transcript_file:
             transcript_file.write(transcript['text'])
 
-    # Loading the transcript file
-    loader = TextLoader(transcript_filepath)
+        # Loading the transcript file
+        loader = TextLoader(transcript_filepath)
 
-    # Create index
-    index = VectorstoreIndexCreator().from_loaders([loader])
+        # Create index
+        index = VectorstoreIndexCreator().from_loaders([loader])
 
-    # Answer the question
-    answer = index.query(question)
+        # Answer the question
+        answer = index.query(question)
+
+        # Delete the original audio file
+        os.remove(audio_path)
 
     return answer.strip()
