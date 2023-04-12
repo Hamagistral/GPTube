@@ -6,9 +6,11 @@
   </div>
   
   <p>Youtube Question Answering App Using Whisper and Langchain</p>
-    <a href="https://www.kaggle.com/datasets/hamzaelbelghiti/data-engineering-jobs-in-the-usa-glassdoor" target="_blank">Blog Post</a>
+    <a href="https://www.youtube.com/watch?v=vqThQVTgAp8&ab_channel=HamzaElBelghiti" target="_blank">Video Demo</a>
     ·
-    <a href="https://github.com/Hamagistral/DataEngineers-Glassdoor/issues" target="_blank">Request Feature</a>
+    <a href="https://medium.com/@hamza.lbelghiti/how-openai-whisper-and-langchain-can-answer-any-question-you-have-from-a-youtube-video-278d04cc3460" target="_blank">Blog Post</a>
+    ·
+    <a href="https://github.com/Hamagistral/GPTube/issues" target="_blank">Request Feature</a>
 </div>
 <hr>
 
