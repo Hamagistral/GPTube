@@ -20,15 +20,19 @@
 
 Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? It can be a frustrating experience, especially when you're short on time. With GPTube, you can simply ask the question you want to find the answer to, and in less than 2 minutes, you can get the answer at a low cost of only 0.006$ per minute of video.
 
-<hr>
-
-### 🛠️ Technologies Used
-
-The core of the project is built on OpenAI's Whisper API, which is a Speech to Text language model used to transcribe audio files, and Langchain a framework for developing applications powered by language models. The front-end of the application is built with Streamlit.
+## 📝 Project Architecture
 
 ![model_arch](https://user-images.githubusercontent.com/66017329/231509367-9c86fd11-b862-426d-a7f3-26743e87659b.png)
 
-<hr>
+## 🛠️ Technologies Used
+
+The core of the project is built on OpenAI's Whisper API, which is a Speech to Text language model used to transcribe audio files, and Langchain a framework for developing applications powered by language models. The front-end of the application is built with Streamlit.
+
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Openai](https://img.shields.io/badge/OpenAI-412991.svg?style=for-the-badge&logo=OpenAI&logoColor=white)
+![YoutubeAPI](https://img.shields.io/badge/YouTube-FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)
+<img src="https://github.com/Hamagistral/DataEngineeringJobs-Analysis/assets/66017329/e3a58405-4096-4644-beab-918054922b24" alt="langchain" width="120">
+<img src="https://user-images.githubusercontent.com/66017329/223900076-e1d5c1e5-7c4d-4b73-84e7-ae7d66149bc6.png" alt="streamlit" width="120">
 
 ### Installation : 
 1. Clone the repository:
@@ -48,10 +52,8 @@ The core of the project is built on OpenAI's Whisper API, which is a Speech to T
 
 3. Click on the **Generate Answer** button to get the answer to your question.
 
-<hr>
-
-### 📨 Contact Me
+## 📨 Contact Me
 
 [LinkedIn](https://www.linkedin.com/in/hamza-elbelghiti/) •
-[Github](https://github.com/Hamagistral) •
+[Website](https://hamagistral.me) •
 [Gmail](hamza.lbelghiti@gmail.com)
