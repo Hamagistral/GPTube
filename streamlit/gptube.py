@@ -3,15 +3,18 @@ import re
 import openai
 import requests
 
+from pytube.exceptions import VideoUnavailable
+from urllib.parse import urlparse, parse_qs
 from moviepy.editor import *
 from pytube import YouTube
-from urllib.parse import urlparse, parse_qs
 
 from langchain.chains.summarize import load_summarize_chain
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.indexes import VectorstoreIndexCreator
+from langchain.embeddings import OpenAIEmbeddings
 from langchain.document_loaders import TextLoader
 from langchain.docstore.document import Document
+from langchain.vectorstores import Chroma
+from langchain.chains import RetrievalQA
 from langchain.llms import OpenAI
 
 # Validation Functions
@@ -33,10 +36,20 @@ def is_valid_openai_key(api_key) -> bool:
         return False
     
 def is_valid_youtube_url(url: str) -> bool:
-    pattern = r'^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)(\&ab_channel=[\w\d]+)?$'
-    match = re.match(pattern, url)
-    
-    return match is not None
+    # Check if the URL is a valid YouTube video URL
+    try:
+        # Create a YouTube object
+        yt = YouTube(url)
+
+        # Check if the video is available
+        if not yt.video_id:
+            return False
+
+    except (VideoUnavailable, Exception):
+        return False
+
+    # Return True if the video is available
+    return yt.streams.filter(adaptive=True).first() is not None
 
 # Calculate YouTube video duration
 def get_video_duration(url: str) -> float:
@@ -46,10 +59,24 @@ def get_video_duration(url: str) -> float:
     return video_length
 
 # Calculate API call cost
-def calculate_api_cost(video_length: float) -> float:
-    api_call_cost = round(video_length * 0.006, 2)
+def calculate_api_cost(video_length: float, option: str) -> float:
+    if option == 'summary':
+        api_call_cost = round(video_length * 0.009, 2)
+    elif option == 'answer':
+        api_call_cost = round(video_length * 0.006, 2)
 
     return api_call_cost
+
+# Get Video Thumbnail URL & Title
+def video_info(url: str):
+
+    yt = YouTube(url)
+
+    # Get the thumbnail URL and title
+    thumbnail_url = yt.thumbnail_url
+    title = yt.title
+
+    return thumbnail_url, title
 
 # Download YouTube video as Audio
 def download_audio(url: str):
@@ -93,6 +120,9 @@ def transcribe_audio(file_path, video_id):
                 with open(transcript_filepath, 'w') as transcript_file:
                     transcript_file.write(transcript['text'])
 
+            # Deleting the mp3 file
+            os.remove(file_path)
+
         else:
             print("Please provide a smaller audio file (less than 25mb).")
 
@@ -100,6 +130,9 @@ def transcribe_audio(file_path, video_id):
 def generate_answer(api_key: str, url: str, question: str) -> str:
 
     openai.api_key = api_key
+
+    llm = OpenAI(temperature=0, openai_api_key=api_key, model_name="gpt-3.5-turbo")
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 
     # Extract the video_id from the url
     query = urlparse(url).query
@@ -112,16 +145,19 @@ def generate_answer(api_key: str, url: str, question: str) -> str:
     # The path of the transcript
     transcript_filepath = f"tmp/{video_id}.txt"
 
-    # Check if the audio file and transcript file already exist
-    if os.path.exists(audio_path) and os.path.exists(transcript_filepath):
-        # Loading the transcript file
-        loader = TextLoader(transcript_filepath)
+    # Check if the transcript file already exist
+    if os.path.exists(transcript_filepath):
+        
+        loader = TextLoader(transcript_filepath, encoding='utf8')
+        documents = loader.load()
+        
+        texts = text_splitter.split_documents(documents)
+        embeddings = OpenAIEmbeddings()
+        db = Chroma.from_documents(texts, embeddings)
 
-        # Create index
-        index = VectorstoreIndexCreator().from_loaders([loader])
-
-        # Answer the question
-        answer = index.query(question)
+        retriever = db.as_retriever()
+        qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
+        answer = qa.run(question)
 
     else: 
         download_audio(url)
@@ -129,15 +165,18 @@ def generate_answer(api_key: str, url: str, question: str) -> str:
         # Transcribe the mp3 audio to text
         transcribe_audio(audio_path, video_id)
 
-        # Loading the transcript file
-        loader = TextLoader(transcript_filepath)
-
-        # Create index
-        index = VectorstoreIndexCreator().from_loaders([loader])
-
-        # Answer the question
-        answer = index.query(question)
+        # Generating summary of the text file
+        loader = TextLoader(transcript_filepath, encoding='utf8')
+        documents = loader.load()
         
+        texts = text_splitter.split_documents(documents)
+        embeddings = OpenAIEmbeddings()
+        db = Chroma.from_documents(texts, embeddings)
+
+        retriever = db.as_retriever()
+        qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
+        answer = qa.run(question)
+
     return answer.strip()
     
 # Generating Video Summary 
@@ -145,7 +184,7 @@ def generate_summary(api_key: str, url: str) -> str:
 
     openai.api_key = api_key
 
-    llm = OpenAI(temperature=0, openai_api_key=api_key)
+    llm = OpenAI(temperature=0, openai_api_key=api_key, model_name="gpt-3.5-turbo")
     text_splitter = CharacterTextSplitter()
 
     # Extract the video_id from the url
@@ -159,8 +198,8 @@ def generate_summary(api_key: str, url: str) -> str:
     # The path of the transcript
     transcript_filepath = f"tmp/{video_id}.txt"
 
-    # Check if the audio file and transcript file already exist
-    if os.path.exists(audio_path) and os.path.exists(transcript_filepath):
+    # Check if the transcript file already exist
+    if os.path.exists(transcript_filepath):
         # Generating summary of the text file
         with open(transcript_filepath) as f:
             transcript_file = f.read()
