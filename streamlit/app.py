@@ -11,7 +11,7 @@ def gptube_app():
     with st.sidebar:
         st.markdown("### 🎥 GPTube : Video Demo")
 
-        st.video("https://youtu.be/vqThQVTgAp8")
+        st.video("https://www.youtube.com/watch?v=uuuv3ooY1WQ")
 
         st.markdown("""<div style="text-align: justify;">Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? With GPTube, 
                     you can simply ask the question you want to find the answer to, and in less than 2 minutes, 
