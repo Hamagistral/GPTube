@@ -6,7 +6,7 @@
   </div>
   
   <p>Youtube Question Answering App Using Whisper and Langchain</p>
-    <a href="https://www.youtube.com/watch?v=vqThQVTgAp8&ab_channel=HamzaElBelghiti" target="_blank">Video Demo</a>
+    <a href="https://www.youtube.com/watch?v=uuuv3ooY1WQ" target="_blank">Video Demo</a>
     ·
     <a href="https://medium.com/@hamza.lbelghiti/how-openai-whisper-and-langchain-can-answer-any-question-you-have-from-a-youtube-video-278d04cc3460" target="_blank">Blog Post</a>
     ·
@@ -14,11 +14,11 @@
 </div>
 <hr>
 
-![image](https://user-images.githubusercontent.com/66017329/231505811-03c628b9-0e2d-4665-abaf-815e3d3a2a20.PNG)
+![image](https://github.com/Hamagistral/GPTube/assets/66017329/30a0ab1c-3d57-4f0e-9fab-aaf8e64b29c8)
 
 ### 🎯 Motivation :
 
-Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? It can be a frustrating experience, especially when you're short on time. With GPTube, you can simply ask the question you want to find the answer to, and in less than 2 minutes, you can get the answer at a low cost of only 0.006$ per minute of video.
+Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? It can be a frustrating experience, especially when you're short on time. With GPTube, you can simply ask the question you want to find the answer to, and in less than 2 minutes, you can get the answer at a low cost of only 0.006$ per minute of video. And also, you can get a full summary of the entire video for just $0.009/minute.
 
 ## 📝 Project Architecture
 
