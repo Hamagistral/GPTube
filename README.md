@@ -14,7 +14,7 @@
 </div>
 <br>
 <div align="center">
-      <img src="https://img.shields.io/github/repo-size/hamagistral/gptube?color=blue&style=plastic"/>
+      <a href="https://gptube.streamlit.app/"><img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg"/></a>
       <img src="https://img.shields.io/github/stars/hamagistral/gptube?color=blue&style=social"/>
 </div>
 
