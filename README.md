@@ -7,7 +7,7 @@
   
   <p>Youtube Video Summarizer and Question Answering App Using Whisper and Langchain</p>
     <a href="https://www.youtube.com/watch?v=uuuv3ooY1WQ" target="_blank">Video Demo</a>
-    🌟
+    🌠
     <a href="https://medium.com/@hamza.lbelghiti/how-openai-whisper-and-langchain-can-answer-any-question-you-have-from-a-youtube-video-278d04cc3460" target="_blank">Blog Post</a>
     🌌
     <a href="https://github.com/Hamagistral/GPTube/issues" target="_blank">Request Feature</a>
