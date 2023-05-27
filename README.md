@@ -37,7 +37,6 @@ The core of the project is built on OpenAI's Whisper API, which is a Speech to T
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Openai](https://img.shields.io/badge/OpenAI-412991.svg?style=for-the-badge&logo=OpenAI&logoColor=white)
 ![YoutubeAPI](https://img.shields.io/badge/YouTube-FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)
-<img src="https://github.com/Hamagistral/DataEngineeringJobs-Analysis/assets/66017329/e3a58405-4096-4644-beab-918054922b24" alt="langchain" width="120">
 <img src="https://user-images.githubusercontent.com/66017329/223900076-e1d5c1e5-7c4d-4b73-84e7-ae7d66149bc6.png" alt="streamlit" width="120">
 
 ### Installation : 
