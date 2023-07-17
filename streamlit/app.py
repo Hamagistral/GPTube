@@ -33,7 +33,7 @@ def gptube_app():
     st.markdown('#') 
 
     # OPENAI API KEY
-    st.markdown('#### 🔑 Step 1 : Enter Your OpenAI API Key') 
+    st.markdown('#### 🔑 Step 1 : Enter your OpenAI API key') 
     openai_api_key = st.text_input("[Get Yours From the OPENAI Website](https://platform.openai.com/account/api-keys) : ", placeholder="sk-***********************************", type="password")
     
     # Disable YouTube URL field until OpenAI API key is valid
@@ -54,7 +54,7 @@ def gptube_app():
         api_call_cost = calculate_api_cost(video_duration, option)
 
         if video_duration >= 4 and video_duration <= 20:
-            st.info(f"The duration of the video is {video_duration} minutes. This will cost you approximately ${api_call_cost}")
+            st.info(f"🕖 The duration of the video is {video_duration} minutes. This will cost you approximately ${api_call_cost} 💲")
             
             thumbnail_url, video_title = video_info(youtube_url)
             st.markdown(f"#### {video_title}")
