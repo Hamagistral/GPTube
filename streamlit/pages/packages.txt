@@ -1,0 +1,2 @@
+libespeak1
+espeak
