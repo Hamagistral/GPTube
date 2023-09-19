@@ -1,2 +1,3 @@
 libespeak1
 espeak
+ffmpeg
