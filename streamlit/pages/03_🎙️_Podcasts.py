@@ -77,7 +77,7 @@ def podcast_app():
                     # Call the function with the user inputs
                     summary = summarize_podcast(audio_file)
 
-            st.markdown(f"#### 📃 Text Summary:")
+            st.markdown(f"#### 📃 Podcast Summary:")
             chapters_info = ""
             for i, chapter in enumerate(summary, start=1):
                 chapters_info += f"##### Chapter {i}:\n"
@@ -88,18 +88,6 @@ def podcast_app():
                 chapters_info += f"**Chapter Summary:** {chapter.summary}  \n\n"
 
             st.success(chapters_info)
-
-            # Text-to-speech (TTS) for the summary
-            engine = pyttsx3.init()
-            voices = engine.getProperty('voices')
-            engine.setProperty('voice', voices[1].id)
-            engine.setProperty('rate', 175)
-            engine.save_to_file(summary, f"summary-{audio_file.name}")
-            engine.runAndWait()
-
-            # Display the audio summary
-            st.markdown("#### 🔊 Audio Summary:")
-            st.audio(f"summary-{audio_file.name}")
         
 podcast_app()
 

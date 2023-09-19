@@ -78,22 +78,8 @@ def youtube_app():
                             # Call the function with the user inputs
                             summary = generate_summary(openai_api_key, youtube_url)
 
-                    st.markdown(f"#### 📃 Text Summary:")
+                    st.markdown(f"#### 📃 Video Summary:")
                     st.success(summary)
-                    
-                    thumbnail_url, video_title = video_info(youtube_url)
-
-                    # Text-to-speech (TTS) for the summary
-                    engine = pyttsx3.init()
-                    voices = engine.getProperty('voices')
-                    engine.setProperty('voice', voices[1].id)
-                    engine.setProperty('rate', 175)
-                    engine.save_to_file(summary, f"summary-{video_title}")
-                    engine.runAndWait()
-
-                    # Display the audio summary
-                    st.markdown("#### 🔊 Audio Summary:")
-                    st.audio(f"summary-{video_title}")
         else:
             st.warning("Please enter a valid OpenAI API and YouTube URL key first")
 
