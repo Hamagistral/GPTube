@@ -6,7 +6,7 @@ import os
 
 st.set_page_config(page_title="GPTMeeting", page_icon='📼')
 
-aai.settings.api_key = ""
+aai.settings.api_key = st.secrets["ASSEMBLYAI_API_KEY"] 
 
 # Create the 'tmp' directory if it doesn't exist
 os.makedirs('tmp', exist_ok=True)
