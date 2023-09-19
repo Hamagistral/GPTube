@@ -6,7 +6,7 @@ import os
 
 st.set_page_config(page_title="GPTPodcasts", page_icon='🎙️')
 
-aai.settings.api_key = f"2f218694a20b4ba88bebc3682d75d1a4" 
+aai.settings.api_key = st.secrets["ASSEMBLYAI_API_KEY"] 
 
 # Summarizing podcast
 def summarize_podcast(audio_file):
