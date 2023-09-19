@@ -59,7 +59,6 @@ def meeting_app():
 
     st.markdown('#### 💿 Step 1: Upload the MP3 file of the recording *(If you have an mp4, [convert it to mp3](https://convertio.co/fr/mp4-mp3/)*)') 
     audio_file = st.file_uploader("Upload your meeting as an audio file", type=["mp3"])
-
     
     if audio_file:
         button = st.button("Summarize Meeting")
@@ -76,7 +75,7 @@ def meeting_app():
             voices = engine.getProperty('voices')
             engine.setProperty('voice', voices[1].id)
             engine.setProperty('rate', 175)
-            engine.save_to_file(summary, "tmp/summary.mp3")
+            engine.save_to_file(summary, "streamlit/tmp/summary.mp3")
             engine.runAndWait()
 
             # Display the audio summary
