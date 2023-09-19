@@ -75,12 +75,12 @@ def meeting_app():
             voices = engine.getProperty('voices')
             engine.setProperty('voice', voices[1].id)
             engine.setProperty('rate', 175)
-            engine.save_to_file(summary, "summary.mp3")
+            engine.save_to_file(summary, f"summary-{audio_file.name}.mp3")
             engine.runAndWait()
 
             # Display the audio summary
             st.markdown("#### 🔊 Audio Summary:")
-            st.audio("summary.mp3")
+            st.audio(f"summary-{audio_file.name}.mp3")
         
 meeting_app()
 

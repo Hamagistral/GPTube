@@ -81,24 +81,19 @@ def youtube_app():
                     st.markdown(f"#### 📃 Text Summary:")
                     st.success(summary)
                     
-                    # Create a temporary directory to store the audio summary
-                    temp_dir = tempfile.TemporaryDirectory()
-                    summary_temp_path = os.path.join(temp_dir.name, 'summary.mp3')
+                    thumbnail_url, video_title = video_info(youtube_url)
 
                     # Text-to-speech (TTS) for the summary
                     engine = pyttsx3.init()
                     voices = engine.getProperty('voices')
                     engine.setProperty('voice', voices[1].id)
                     engine.setProperty('rate', 175)
-                    engine.save_to_file(summary, summary_temp_path)
+                    engine.save_to_file(summary, f"summary-{video_title}.mp3")
                     engine.runAndWait()
 
                     # Display the audio summary
                     st.markdown("#### 🔊 Audio Summary:")
-                    st.audio(summary_temp_path)
-
-                    # Close the temporary directory
-                    temp_dir.cleanup()
+                    st.audio(f"summary-{video_title}.mp3")
         else:
             st.warning("Please enter a valid OpenAI API and YouTube URL key first")
 
