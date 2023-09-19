@@ -88,12 +88,12 @@ def youtube_app():
                     voices = engine.getProperty('voices')
                     engine.setProperty('voice', voices[1].id)
                     engine.setProperty('rate', 175)
-                    engine.save_to_file(summary, f"summary-{video_title}.mp3")
+                    engine.save_to_file(summary, f"summary-{video_title}")
                     engine.runAndWait()
 
                     # Display the audio summary
                     st.markdown("#### 🔊 Audio Summary:")
-                    st.audio(f"summary-{video_title}.mp3")
+                    st.audio(f"summary-{video_title}")
         else:
             st.warning("Please enter a valid OpenAI API and YouTube URL key first")
 
