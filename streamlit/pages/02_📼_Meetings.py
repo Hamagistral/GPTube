@@ -70,17 +70,20 @@ def meeting_app():
             st.markdown(f"#### 📃 Text Summary:")
             st.success(summary)
 
+            # Create the 'tmp' directory if it doesn't exist
+            os.makedirs('tmp', exist_ok=True)
+
             # Text-to-speech (TTS) for the summary
             engine = pyttsx3.init()
             voices = engine.getProperty('voices')
             engine.setProperty('voice', voices[1].id)
             engine.setProperty('rate', 175)
-            engine.save_to_file(summary, "streamlit/tmp/summary.mp3")
+            engine.save_to_file(summary, "tmp/summary.mp3")
             engine.runAndWait()
 
             # Display the audio summary
             st.markdown("#### 🔊 Audio Summary:")
-            st.audio("streamlit/tmp/summary.mp3")
+            st.audio("tmp/summary.mp3")
         
 
 meeting_app()
