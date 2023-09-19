@@ -88,18 +88,25 @@ def podcast_app():
                 chapters_info += f"**Chapter Summary:** {chapter.summary}  \n\n"
 
             st.success(chapters_info)
+            
+            # Create a temporary directory to store the audio summary
+            temp_dir_audio = tempfile.TemporaryDirectory()
+            audio_summary_temp_path = os.path.join(temp_dir_audio.name, 'summary.mp3')
 
             # Text-to-speech (TTS) for the summary
             engine = pyttsx3.init()
             voices = engine.getProperty('voices')
             engine.setProperty('voice', voices[1].id)
             engine.setProperty('rate', 175)
-            engine.save_to_file(summary, f"tmp/summary.mp3")
+            engine.save_to_file(summary, audio_summary_temp_path)
             engine.runAndWait()
 
             # Display the audio summary
             st.markdown("#### 🔊 Audio Summary:")
-            st.audio("tmp/summary.mp3")
+            st.audio(audio_summary_temp_path)
+
+            # Close the temporary directory for the audio summary
+            temp_dir_audio.cleanup()
         
 podcast_app()
 
