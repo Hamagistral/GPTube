@@ -8,18 +8,6 @@ st.set_page_config(page_title="GPTMeeting", page_icon='📼')
 
 aai.settings.api_key = st.secrets["ASSEMBLYAI_API_KEY"] 
 
-# Text-to-speech (TTS) for the summary
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)
-engine.setProperty('rate', 175)
-engine.save_to_file("Hello", "summary.mp3")
-engine.runAndWait()
-
-# Display the audio summary
-st.markdown("#### 🔊 Audio Summary:")
-st.audio("summary.mp3")
-
 def summarize_meeting(audio_file):
 
     # Summarization using AssemblyAI
@@ -48,54 +36,51 @@ def summarize_meeting(audio_file):
 
         return transcript.summary
 
-# # App UI
-# def meeting_app():
+# App UI
+def meeting_app():
 
-#     with st.sidebar:
-#         st.markdown("### 🎥 GPTube: Your Shortcut to Video Insights")
+    with st.sidebar:
+        st.markdown("### 🎥 GPTube: Your Shortcut to Video Insights")
 
-#         st.video("https://www.youtube.com/watch?v=uuuv3ooY1WQ")
+        st.video("https://www.youtube.com/watch?v=uuuv3ooY1WQ")
 
-#         st.markdown("## 🚀 What's GPTube ?")
-#         st.markdown("""<div style="text-align: justify;">Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? With GPTube, 
-#                     you can simply ask the question you want to find the answer to, and in less than 2 minutes, 
-#                     you can get the answer at a low cost of only $0.006 per minute of video. Or get a summary of the entire video
-#                     for just $0.009/minute.<br><br>Now, also includes meetings and podcasts summarization.</div>""", unsafe_allow_html=True)
+        st.markdown("## 🚀 What's GPTube ?")
+        st.markdown("""<div style="text-align: justify;">Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? With GPTube, 
+                    you can simply ask the question you want to find the answer to, and in less than 2 minutes, 
+                    you can get the answer at a low cost of only $0.006 per minute of video. Or get a summary of the entire video
+                    for just $0.009/minute.<br><br>Now, also includes meetings and podcasts summarization.</div>""", unsafe_allow_html=True)
         
-#         st.markdown("#")
+        st.markdown("#")
 
-#         st.markdown("💻 Source code on [GitHub](https://github.com/Hamagistral/GPTube)")
-#         st.markdown("👨‍💻 Made by [Hamza El Belghiti](https://www.linkedin.com/in/hamza-elbelghiti/)")
+        st.markdown("💻 Source code on [GitHub](https://github.com/Hamagistral/GPTube)")
+        st.markdown("👨‍💻 Made by [Hamza El Belghiti](https://www.linkedin.com/in/hamza-elbelghiti/)")
 
-#     st.markdown('## 📼 Summarize your Meeting Recordings') 
+    st.markdown('## 📼 Summarize your Meeting Recordings') 
 
-#     st.markdown('#### 💿 Step 1: Upload the MP3 file of the recording *(If you have an mp4, [convert it to mp3](https://convertio.co/fr/mp4-mp3/)*)') 
-#     audio_file = st.file_uploader("Upload your meeting as an audio file", type=["mp3"])
+    st.markdown('#### 💿 Step 1: Upload the MP3 file of the recording *(If you have an mp4, [convert it to mp3](https://convertio.co/fr/mp4-mp3/)*)') 
+    audio_file = st.file_uploader("Upload your meeting as an audio file", type=["mp3"])
     
-#     if audio_file:
-#         button = st.button("Summarize Meeting")
-#         if button:
-#             with st.spinner("Summarizing your meeting..."):
-#                     # Call the function with the user inputs
-#                     summary = summarize_meeting(audio_file)
+    if audio_file:
+        button = st.button("Summarize Meeting")
+        if button:
+            with st.spinner("Summarizing your meeting..."):
+                    # Call the function with the user inputs
+                    summary = summarize_meeting(audio_file)
 
-#             st.markdown(f"#### 📃 Text Summary:")
-#             st.success(summary)
+            st.markdown(f"#### 📃 Text Summary:")
+            st.success(summary)
 
-#             # Create the 'tmp' directory if it doesn't exist
-#             os.makedirs('streamlit/tmp', exist_ok=True)
+            # Text-to-speech (TTS) for the summary
+            engine = pyttsx3.init()
+            voices = engine.getProperty('voices')
+            engine.setProperty('voice', voices[1].id)
+            engine.setProperty('rate', 175)
+            engine.save_to_file(summary, "summary.mp3")
+            engine.runAndWait()
 
-#             # Text-to-speech (TTS) for the summary
-#             engine = pyttsx3.init()
-#             voices = engine.getProperty('voices')
-#             engine.setProperty('voice', voices[1].id)
-#             engine.setProperty('rate', 175)
-#             engine.save_to_file(summary, "streamlit/tmp/summary.mp3")
-#             engine.runAndWait()
-
-#             # Display the audio summary
-#             st.markdown("#### 🔊 Audio Summary:")
-#             st.audio("streamlit/tmp/summary.mp3")
+            # Display the audio summary
+            st.markdown("#### 🔊 Audio Summary:")
+            st.audio("summary.mp3")
         
 
 # meeting_app()
