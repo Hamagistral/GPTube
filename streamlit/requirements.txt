@@ -6,3 +6,4 @@ requests==2.31.0
 chromadb==0.4.11
 pyttsx3
 assemblyai
+tiktoken
