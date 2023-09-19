@@ -181,7 +181,7 @@ def generate_answer(api_key: str, url: str, question: str) -> str:
     return answer.strip()
     
 # Generating Video Summary 
-@st.cache_data()
+@st.cache_data(show_spinner=False)
 def generate_summary(api_key: str, url: str) -> str:
 
     openai.api_key = api_key
