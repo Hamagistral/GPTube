@@ -3,4 +3,6 @@ moviepy==1.0.3
 openai==0.27.1
 pytube==15.0.0
 requests==2.31.0
-chromadb==0.3.29
+chromadb==0.4.11
+pyttsx3
+assemblyai

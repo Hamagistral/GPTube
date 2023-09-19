@@ -1,4 +1,6 @@
 import streamlit as st
+import tempfile
+import pyttsx3
 import os
 
 from gptube import generate_answer, generate_summary, video_info, is_valid_openai_key, is_valid_youtube_url, get_video_duration, calculate_api_cost
@@ -6,31 +8,29 @@ from gptube import generate_answer, generate_summary, video_info, is_valid_opena
 st.set_page_config(page_title="GPTube", page_icon='🎥')
 
 # App UI
-def gptube_app():
+def youtube_app():
 
     with st.sidebar:
-        st.markdown("### 🎥 GPTube : Video Demo")
+        st.markdown("### 🎥 GPTube: Your Shortcut to Video Insights")
 
         st.video("https://www.youtube.com/watch?v=uuuv3ooY1WQ")
 
+        st.markdown("## 🚀 What's GPTube ?")
         st.markdown("""<div style="text-align: justify;">Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? With GPTube, 
                     you can simply ask the question you want to find the answer to, and in less than 2 minutes, 
                     you can get the answer at a low cost of only $0.006 per minute of video. Or get a summary of the entire video
-                    for just $0.009/minute.</div>""", unsafe_allow_html=True)
+                    for just $0.009/minute.<br><br>Now, also includes meetings and podcasts summarization.</div>""", unsafe_allow_html=True)
         
         st.markdown("#")
 
-        st.markdown("😼 Source code on [GitHub](https://github.com/Hamagistral/GPTube)")
-        st.markdown("🛠️ Made by [Hamza El Belghiti](https://www.linkedin.com/in/hamza-elbelghiti/)")
+        st.markdown("💻 Source code on [GitHub](https://github.com/Hamagistral/GPTube)")
+        st.markdown("👨‍💻 Made by [Hamza El Belghiti](https://www.linkedin.com/in/hamza-elbelghiti/)")
 
-
-    st.header("🎥 GPTube : Your Shortcut to Video Insights")
-
-    st.markdown('#') 
+    st.markdown('## 🎬 Talk with YouTube Videos') 
 
     choice = st.radio("Please choose an option :", ('Generate Summary', 'Generate Answer to a Question'), horizontal=True)
 
-    st.markdown('#') 
+    st.markdown('######') 
 
     # OPENAI API KEY
     st.markdown('#### 🔑 Step 1 : Enter your OpenAI API key') 
@@ -38,10 +38,10 @@ def gptube_app():
     
     # Disable YouTube URL field until OpenAI API key is valid
     if openai_api_key:
-        st.markdown('#### 📹 Step 2 : Enter the YouTube Video URL')
+        st.markdown('#### 📼 Step 2 : Enter the YouTube Video URL')
         youtube_url = st.text_input("URL :", placeholder="https://www.youtube.com/watch?v=************")
     else:
-        st.markdown('#### 📹 Step 2 : Enter the YouTube Video URL')
+        st.markdown('#### 📼 Step 2 : Enter the YouTube Video URL')
         youtube_url = st.text_input(
             "URL : ",
             placeholder="Please enter a valid OpenAI API key first",
@@ -57,7 +57,7 @@ def gptube_app():
             st.info(f"🕖 The duration of the video is {video_duration} minutes. This will cost you approximately ${api_call_cost} 💲")
             
             thumbnail_url, video_title = video_info(youtube_url)
-            st.markdown(f"#### {video_title}")
+            st.markdown(f"#### 📽️ {video_title}")
             st.image(f"{thumbnail_url}", use_column_width='always')
             
         else:
@@ -78,8 +78,27 @@ def gptube_app():
                             # Call the function with the user inputs
                             summary = generate_summary(openai_api_key, youtube_url)
 
-                    st.markdown(f"#### 🤖 Summary :")
+                    st.markdown(f"#### 📃 Text Summary:")
                     st.success(summary)
+                    
+                    # Create a temporary directory to store the audio summary
+                    temp_dir = tempfile.TemporaryDirectory()
+                    summary_temp_path = os.path.join(temp_dir.name, 'summary.mp3')
+
+                    # Text-to-speech (TTS) for the summary
+                    engine = pyttsx3.init()
+                    voices = engine.getProperty('voices')
+                    engine.setProperty('voice', voices[1].id)
+                    engine.setProperty('rate', 175)
+                    engine.save_to_file(summary, summary_temp_path)
+                    engine.runAndWait()
+
+                    # Display the audio summary
+                    st.markdown("#### 🔊 Audio Summary:")
+                    st.audio(summary_temp_path)
+
+                    # Close the temporary directory
+                    temp_dir.cleanup()
         else:
             st.warning("Please enter a valid OpenAI API and YouTube URL key first")
 
@@ -110,7 +129,7 @@ def gptube_app():
                 st.markdown(f"#### 🤖 {question}")
                 st.success(answer)
             
-gptube_app()
+youtube_app()
 
 # Hide Left Menu
 st.markdown("""<style>

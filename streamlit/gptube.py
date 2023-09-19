@@ -2,6 +2,7 @@ import os
 import re
 import openai
 import requests
+import streamlit as st
 
 from pytube.exceptions import VideoUnavailable
 from urllib.parse import urlparse, parse_qs
@@ -180,6 +181,7 @@ def generate_answer(api_key: str, url: str, question: str) -> str:
     return answer.strip()
     
 # Generating Video Summary 
+@st.cache_data()
 def generate_summary(api_key: str, url: str) -> str:
 
     openai.api_key = api_key
