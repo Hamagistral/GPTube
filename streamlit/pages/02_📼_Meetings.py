@@ -80,7 +80,7 @@ def meeting_app():
 
             # Display the audio summary
             st.markdown("#### 🔊 Audio Summary:")
-            st.audio("tmp/summary.mp3")
+            st.audio("streamlit/tmp/summary.mp3")
         
 
 meeting_app()
