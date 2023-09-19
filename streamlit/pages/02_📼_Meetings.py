@@ -82,8 +82,7 @@ def meeting_app():
             st.markdown("#### 🔊 Audio Summary:")
             st.audio("summary.mp3")
         
-
-# meeting_app()
+meeting_app()
 
 # Hide Left Menu
 st.markdown("""<style>
