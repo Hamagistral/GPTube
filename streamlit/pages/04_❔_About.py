@@ -1,5 +1,22 @@
 import streamlit as st
 
+with st.sidebar:
+        st.markdown("### 🎥 GPTube: Your Shortcut to Video Insights")
+
+        st.video("https://www.youtube.com/watch?v=uuuv3ooY1WQ")
+
+        st.markdown("## 🚀 What's GPTube ?")
+        st.markdown("""<div style="text-align: justify;">Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? With GPTube, 
+                    you can simply ask the question you want to find the answer to, and in less than 2 minutes, 
+                    you can get the answer at a low cost of only $0.006 per minute of video. Or get a summary of the entire video
+                    for just $0.009/minute.<br><br>Now, also includes meetings and podcasts summarization.</div>""", unsafe_allow_html=True)
+        
+        st.markdown("####")
+
+        st.markdown("📝 [Medium Article](https://medium.com/@hamza.lbelghiti/how-openai-whisper-and-langchain-can-answer-any-question-you-have-from-a-youtube-video-278d04cc3460)")
+        st.markdown("💻 Source code on [GitHub](https://github.com/Hamagistral/GPTube)")
+        st.markdown("👨‍💻 Made by [Hamza El Belghiti](https://www.linkedin.com/in/hamza-elbelghiti/)")
+
 st.markdown("## ❔ About GPTube")
     
 # Add content to your "About" page

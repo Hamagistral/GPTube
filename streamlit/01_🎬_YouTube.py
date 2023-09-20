@@ -5,7 +5,7 @@ import os
 
 from gptube import generate_answer, generate_summary, video_info, is_valid_openai_key, is_valid_youtube_url, get_video_duration, calculate_api_cost
 
-st.set_page_config(page_title="GPTube", page_icon='🎥')
+st.set_page_config(page_title="GPTube", page_icon='🎬')
 
 # App UI
 def youtube_app():
@@ -21,8 +21,9 @@ def youtube_app():
                     you can get the answer at a low cost of only $0.006 per minute of video. Or get a summary of the entire video
                     for just $0.009/minute.<br><br>Now, also includes meetings and podcasts summarization.</div>""", unsafe_allow_html=True)
         
-        st.markdown("#")
+        st.markdown("####")
 
+        st.markdown("📝 [Medium Article](https://medium.com/@hamza.lbelghiti/how-openai-whisper-and-langchain-can-answer-any-question-you-have-from-a-youtube-video-278d04cc3460)")
         st.markdown("💻 Source code on [GitHub](https://github.com/Hamagistral/GPTube)")
         st.markdown("👨‍💻 Made by [Hamza El Belghiti](https://www.linkedin.com/in/hamza-elbelghiti/)")
 
