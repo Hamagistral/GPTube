@@ -4,9 +4,12 @@ import tempfile
 import pyttsx3
 import os
 
+from elevenlabs import generate, set_api_key
+
 st.set_page_config(page_title="GPTMeeting", page_icon='📼')
 
 aai.settings.api_key = st.secrets["ASSEMBLYAI_API_KEY"] 
+set_api_key(st.secrets["ELEVENLABS_API_KEY"])
 
 def summarize_meeting(audio_file):
 
@@ -58,7 +61,7 @@ def meeting_app():
 
     st.markdown('## 📼 Summarize your Meeting Recordings') 
 
-    st.markdown('#### 💿 Step 1: Upload the MP3 file of the recording *(If you have an mp4, [convert it to mp3](https://convertio.co/fr/mp4-mp3/)*)') 
+    st.markdown('#### 💿 Step 1: Upload the MP3 file of the recording *(If you have an mp4, [convert it to mp3](https://convertio.co/mp4-mp3/)*)') 
     audio_file = st.file_uploader("Upload your meeting as an audio file", type=["mp3"])
     
     if audio_file:
@@ -68,8 +71,17 @@ def meeting_app():
                     # Call the function with the user inputs
                     summary = summarize_meeting(audio_file)
 
-            st.markdown(f"#### 📃 Meeting Summary:")
+            st.markdown(f"#### 📃 Meeting Text Summary:")
             st.success(summary)
+
+            st.markdown(f"#### 🔊 Meeting Audio Summary:")
+            audio = generate(
+                text=summary,
+                voice="Bella",
+                model="eleven_multilingual_v2"
+            )
+
+            st.audio(audio)
         
 meeting_app()
 

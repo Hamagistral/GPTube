@@ -4,8 +4,11 @@ import pyttsx3
 import os
 
 from gptube import generate_answer, generate_summary, video_info, is_valid_openai_key, is_valid_youtube_url, get_video_duration, calculate_api_cost
+from elevenlabs import generate, set_api_key
 
 st.set_page_config(page_title="GPTube", page_icon='🎬')
+
+set_api_key(st.secrets["ELEVENLABS_API_KEY"])
 
 # App UI
 def youtube_app():
@@ -81,6 +84,15 @@ def youtube_app():
 
                     st.markdown(f"#### 📃 Video Summary:")
                     st.success(summary)
+
+                    st.markdown(f"#### 🔊 Audio Summary:")
+                    audio = generate(
+                        text=summary,
+                        voice="Bella",
+                        model="eleven_multilingual_v2"
+                    )
+
+                    st.audio(audio)
         else:
             st.warning("Please enter a valid OpenAI API and YouTube URL key first")
 

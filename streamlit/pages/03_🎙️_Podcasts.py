@@ -4,9 +4,12 @@ import tempfile
 import pyttsx3
 import os
 
+from elevenlabs import generate, set_api_key
+
 st.set_page_config(page_title="GPTPodcasts", page_icon='🎙️')
 
 aai.settings.api_key = st.secrets["ASSEMBLYAI_API_KEY"] 
+set_api_key(st.secrets["ELEVENLABS_API_KEY"])
 
 # Summarizing podcast
 def summarize_podcast(audio_file):
@@ -67,7 +70,7 @@ def podcast_app():
 
     st.markdown('## 🎙️ Creat Summarized chapters from Podcasts') 
 
-    st.markdown('#### 💿 Step 1: Upload the MP3 file of the podcast *(If you have an mp4, [convert it to mp3](https://convertio.co/fr/mp4-mp3/)*)') 
+    st.markdown('#### 💿 Step 1: Upload the MP3 file of the podcast *(If you have an mp4, [convert it to mp3](https://convertio.co/mp4-mp3/)*)') 
     audio_file = st.file_uploader("Upload your podcast as an audio file", type=["mp3"])
 
     if audio_file:
@@ -78,7 +81,7 @@ def podcast_app():
                     # Call the function with the user inputs
                     summary = summarize_podcast(audio_file)
 
-            st.markdown(f"#### 📃 Podcast Summary:")
+            st.markdown(f"#### 📃 Podcast Text Summary:")
             chapters_info = ""
             for i, chapter in enumerate(summary, start=1):
                 chapters_info += f"##### Chapter {i}:\n"
@@ -89,6 +92,15 @@ def podcast_app():
                 chapters_info += f"**Chapter Summary:** {chapter.summary}  \n\n"
 
             st.success(chapters_info)
+
+            st.markdown(f"#### 🔊 Podcast Audio Summary:")
+            audio = generate(
+                text=chapters_info,
+                voice="Bella",
+                model="eleven_multilingual_v2"
+            )
+
+            st.audio(audio)
         
 podcast_app()
 
