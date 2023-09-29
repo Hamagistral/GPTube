@@ -46,7 +46,7 @@ def ms_to_hms(milliseconds):
     elif minutes > 0:
         return f"{minutes:02}:{seconds:02}"
     else:
-        return f"00:{seconds:02} s"
+        return f"00:{seconds:02}"
 
 # App UI
 def podcast_app():
@@ -94,14 +94,16 @@ def podcast_app():
             st.success(chapters_info)
 
             st.markdown(f"#### 🔊 Podcast Audio Summary:")
-            audio = generate(
-                text=chapters_info,
-                voice="Bella",
-                model="eleven_multilingual_v2"
-            )
+
+            with st.spinner("Generating the audio summary..."):
+                audio = generate(
+                    text=chapters_info,
+                    voice="Bella",
+                    model="eleven_multilingual_v2"
+                )
 
             st.audio(audio)
-        
+            
 podcast_app()
 
 # Hide Left Menu

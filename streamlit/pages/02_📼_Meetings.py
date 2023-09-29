@@ -75,11 +75,12 @@ def meeting_app():
             st.success(summary)
 
             st.markdown(f"#### 🔊 Meeting Audio Summary:")
-            audio = generate(
-                text=summary,
-                voice="Bella",
-                model="eleven_multilingual_v2"
-            )
+            with st.spinner("Generating the audio summary..."):
+                audio = generate(
+                    text=summary,
+                    voice="Bella",
+                    model="eleven_multilingual_v2"
+                )
 
             st.audio(audio)
         
