@@ -46,7 +46,7 @@ def ms_to_hms(milliseconds):
     elif minutes > 0:
         return f"{minutes:02}:{seconds:02}"
     else:
-        return f"{00:seconds:02} s"
+        return f"00:{seconds:02} s"
 
 # App UI
 def podcast_app():
