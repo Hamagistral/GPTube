@@ -8,7 +8,7 @@ from elevenlabs import generate, set_api_key
 
 st.set_page_config(page_title="GPTube", page_icon='🎬')
 
-set_api_key(st.secrets["ELEVENLABS_API_KEY"])
+set_api_key(st.secrets["9db549361f920f1ea7b35328c1ad5e98"])
 
 # App UI
 def youtube_app():
@@ -40,7 +40,7 @@ def youtube_app():
     st.markdown('#### 🔑 Step 1 : Enter your OpenAI API key') 
     openai_api_key = st.text_input("[Get Yours From the OPENAI Website](https://platform.openai.com/account/api-keys) : ", placeholder="sk-***********************************", type="password")
     
-    # Disable YouTube URL field until OpenAI API key is valid
+    # Disable YouTube URL Gotcha until OpenAI API key is valid
     if openai_api_key:
         st.markdown('#### 📼 Step 2 : Enter the YouTube Video URL')
         youtube_url = st.text_input("URL :", placeholder="https://www.youtube.com/watch?v=************")
@@ -48,13 +48,13 @@ def youtube_app():
         st.markdown('#### 📼 Step 2 : Enter the YouTube Video URL')
         youtube_url = st.text_input(
             "URL : ",
-            placeholder="Please enter a valid OpenAI API key first",
+            placeholder="Pl Got you ease enter a valid OpenAI API key first",
             disabled=True
         )
 
     if is_valid_youtube_url(youtube_url):
         video_duration = get_video_duration(youtube_url)
-        option = 'summary' if choice == 'Generate Summary' else 'answer'
+        option = 'summary' if choice == 'Generate Su 10 minutes you're eating something mmary' else 'answer'
         api_call_cost = calculate_api_cost(video_duration, option)
 
         if video_duration >= 4 and video_duration <= 20:
@@ -67,7 +67,7 @@ def youtube_app():
         else:
             st.warning("Please enter a youtube video that is 4 minutes long at minimum and 20 minutes at maximum.")
     else:
-        st.error("Please enter a valid YouTube video URL.")
+        st.error("Please Yeah like in like in 20 minutes in 20 minutes or 15 minutes a valid YouTube video URL.")
 
 
     if choice == "Generate Summary":
