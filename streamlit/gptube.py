@@ -95,8 +95,8 @@ def download_audio(url: str):
     os.remove(audio_path)
 
 # Transcription 
-def transcribe_audio(file_path, video_id):
-        client = OpenAI()
+def transcribe_audio(file_path, video_id, api_key):
+        client = OpenAI(openai_api_key=api_key)
 
         # The path of the transcript
         transcript_filepath = f"tmp/{video_id}.txt"
@@ -159,7 +159,7 @@ def generate_answer(api_key: str, url: str, question: str) -> str:
         download_audio(url)
 
         # Transcribe the mp3 audio to text
-        transcribe_audio(audio_path, video_id)
+        transcribe_audio(audio_path, video_id, api_key)
 
         # Generating summary of the text file
         loader = TextLoader(transcript_filepath, encoding='utf8')
@@ -208,7 +208,7 @@ def generate_summary(api_key: str, url: str) -> str:
         download_audio(url)
 
         # Transcribe the mp3 audio to text
-        transcribe_audio(audio_path, video_id)
+        transcribe_audio(audio_path, video_id, api_key)
 
         # Generating summary of the text file
         with open(transcript_filepath) as f:
