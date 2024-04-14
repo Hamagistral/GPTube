@@ -96,7 +96,7 @@ def download_audio(url: str):
 
 # Transcription 
 def transcribe_audio(file_path, video_id, api_key):
-        client = OpenAI(openai_api_key=api_key)
+        client = OpenAI(api_key=api_key)
 
         # The path of the transcript
         transcript_filepath = f"tmp/{video_id}.txt"
