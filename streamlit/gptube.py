@@ -96,7 +96,7 @@ def download_audio(url: str):
 
 # Transcription 
 def transcribe_audio(file_path, video_id, api_key):
-        client = OpenAI(api_key=api_key)
+        client = OpenAI(openai_api_key=api_key)
 
         # The path of the transcript
         transcript_filepath = f"tmp/{video_id}.txt"
@@ -110,7 +110,7 @@ def transcribe_audio(file_path, video_id, api_key):
         # Check if the file size is less than 25 MB
         if file_size_in_mb < 25:
             with open(file_path, "rb") as audio_file:
-                transcription = client.audio.transcriptions.create("whisper-1", file=audio_file, response_format="text")
+                transcription = client.audio.transcriptions.create(model="whisper-1", file=audio_file, response_format="text")
                 
                 # Writing the content of transcript into a txt file
                 with open(transcript_filepath, 'w') as transcript_file:
