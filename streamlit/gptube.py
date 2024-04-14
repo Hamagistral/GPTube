@@ -20,22 +20,15 @@ from langchain.llms import OpenAI
 
 # Validation Functions
 def is_valid_openai_key(api_key) -> bool:
+    openai.api_key = api_key
+    
     try:
-        # Test OpenAI API key by making a request to the authentication endpoint
-        auth_response = requests.get("https://api.openai.com/v1/engines", headers={"Authorization": f"Bearer {api_key}"})
-        auth_response.raise_for_status()
-
-        # Test OpenAI Python package by creating an instance of the openai.api object
-        openai.api_key = api_key
-        openai.Completion.create(engine="text-davinci-002", prompt="Hello, World!")
-
-        # If both tests pass, the API key is valid
+        openai.models.list()
+    except openai.AuthenticationError:
+        return False
+    else:
         return True
 
-    except (requests.exceptions.HTTPError, Exception):
-        # If either test fails, the API key is invalid
-        return False
-    
 def is_valid_youtube_url(url: str) -> bool:
     # Check if the URL is a valid YouTube video URL
     try:
@@ -183,8 +176,6 @@ def generate_answer(api_key: str, url: str, question: str) -> str:
 # Generating Video Summary 
 @st.cache_data(show_spinner=False)
 def generate_summary(api_key: str, url: str) -> str:
-
-    openai.api_key = api_key
 
     llm = OpenAI(temperature=0, openai_api_key=api_key, model_name="gpt-3.5-turbo")
     text_splitter = CharacterTextSplitter()

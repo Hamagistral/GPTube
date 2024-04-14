@@ -4,11 +4,11 @@ import pyttsx3
 import os
 
 from gptube import generate_answer, generate_summary, video_info, is_valid_openai_key, is_valid_youtube_url, get_video_duration, calculate_api_cost
-from elevenlabs import generate, set_api_key
+# from elevenlabs import generate, set_api_key
 
 st.set_page_config(page_title="GPTube", page_icon='🎬')
 
-set_api_key(st.secrets["ELEVENLABS_API_KEY"])
+# set_api_key(st.secrets["ELEVENLABS_API_KEY"])
 
 # App UI
 def youtube_app():
@@ -22,7 +22,7 @@ def youtube_app():
         st.markdown("""<div style="text-align: justify;">Have you ever found yourself going through a long YouTube video, trying to find the answer to a specific question? With GPTube, 
                     you can simply ask the question you want to find the answer to, and in less than 2 minutes, 
                     you can get the answer at a low cost of only $0.006 per minute of video. Or get a summary of the entire video
-                    for just $0.009/minute.<br><br>Now, also includes meetings and podcasts summarization.</div>""", unsafe_allow_html=True)
+                    for just $0.009/minute.<br>""", unsafe_allow_html=True)
         
         st.markdown("####")
 
@@ -85,15 +85,15 @@ def youtube_app():
                     st.markdown(f"#### 📃 Video Summary:")
                     st.success(summary)
 
-                    st.markdown(f"#### 🔊 Audio Summary:")
-                    with st.spinner("Generating the audio summary..."):
-                        audio = generate(
-                            text=summary,
-                            voice="Bella",
-                            model="eleven_multilingual_v2"
-                        )
+                    # st.markdown(f"#### 🔊 Audio Summary:")
+                    # with st.spinner("Generating the audio summary..."):
+                    #     audio = generate(
+                    #         text=summary,
+                    #         voice="Bella",
+                    #         model="eleven_multilingual_v2"
+                    #     )
 
-                    st.audio(audio)
+                    # st.audio(audio)
         else:
             st.warning("Please enter a valid OpenAI API and YouTube URL key first")
 
