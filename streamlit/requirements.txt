@@ -1,5 +1,5 @@
-openai==1.8.0
-langchain==0.0.234
+openai
+langchain
 moviepy==1.0.3
 pytube==15.0.0
 requests==2.31.0
