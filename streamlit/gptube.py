@@ -178,6 +178,7 @@ def generate_answer(api_key: str, url: str, question: str) -> str:
 # Generating Video Summary 
 @st.cache_data(show_spinner=False)
 def generate_summary(api_key: str, url: str) -> str:
+    os.environ['OPENAI_API_KEY'] = api_key
 
     llm = OpenAI(temperature=0, openai_api_key=api_key, model_name="gpt-3.5-turbo")
     text_splitter = CharacterTextSplitter()
